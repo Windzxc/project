@@ -34,6 +34,6 @@ int main(int argc, char *argv[])
     write(sockfd, &ch, 1);
     read(sockfd, &ch, 1);
     close(sockfd);
-    exit(0);
+    return 0;
 
 }
