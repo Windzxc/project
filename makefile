@@ -1,14 +1,10 @@
 all : server client
 .PHONY : all
-server : server.o
+server : server.c
 	gcc -o $@ $<
 
-client.o : client.o
-	gcc -o $@ $<
-
-server.o : server.c
+client.o : client.c
 	gcc -o $@ $<
 
 .PHONY : clean
 	rm -f client server server.o client.o
-	
