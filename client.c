@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    result = connect(clientfd, (struct sockadd*)&address, len);
+    result = connect(clientfd, (struct sockaddr *)&address, len);
 
     if (result == -1)
     {
