@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     if (result == -1)
     {
-        printf("oops: client");
+        printf("oops: client\n");
         exit(1);
     }
     
