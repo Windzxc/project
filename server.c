@@ -11,7 +11,6 @@
 #define MAXLINE 520
 #define HOSTLEN 120
 #define PORT 13
-#define IP 127.0.0.1
 #define BACKLOG 5
 
 int make_server_socket(int port, int backlog);
@@ -23,12 +22,7 @@ int main(int argc, int *argv[])
     int connfd;
     struct sockadd_in clientaddr;
     socklen_t clientlen;
-
-
-    port = argv[1];
-    backlog = argv[2];
     
-
     listenfd = make_server_socket(PORT, BACKLOG);
     
     while(1)
@@ -48,7 +42,7 @@ int make_server_socket(int port, int backlog)
     struct hostent *hp;
     struct sockadd_in address;
     char hostname[HOSTLEN];
-  
+    char *ip = "127.0.0.1";
     int portnum = port;
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -62,10 +56,13 @@ int make_server_socket(int port, int backlog)
     gethostname(hostname,HOSTLEN);
     //hp = (struct hostent *)gethostbyname(hostname);
     
-    
+    if (inet_pton(AF_INET, ip, &address.sin_addr) <= 0)
+    {
+        printf("error:inet_pton");
+        exit(1);
+    }
     address.sin_family = AF_INET;
     address.sin_port = htonl(13);
-    address.sin_addr.s_addr = IP;
 
     if (bind(listenfd, &address, sizeof(address)) != 0)
     {
