@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
     {
         printf("error:inet_pton");
         exit(1);
-    }
+    }   
+    printf("发起连接。。。\n");
 
     result = connect(clientfd, (struct sockaddr *)&address, len);
 

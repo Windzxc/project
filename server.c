@@ -22,11 +22,11 @@ int main(int argc, int *argv[])
     int connfd;
     
     listenfd = make_server_socket(PORT, BACKLOG);
-    
+    printf("端口打开监听，服务器已启动\n");
     while(1)
     {
         connfd = accept(listenfd, NULL, NULL);
-
+        printf("等待连接中。。。\n");
         echo(connfd);
         close(connfd);
     }
