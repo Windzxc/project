@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     int len;
     int result;
     char buf[MAXLINE];
-    char *ip = "127.0.0.1";
+    char *ip = "10.206.0.10";
 
     len = sizeof(address);
     memset(&address, 0, sizeof(address));

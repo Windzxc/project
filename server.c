@@ -38,7 +38,7 @@ int make_server_socket(int port, int backlog)
 {
     int listenfd;
     struct sockaddr_in address;
-    char *ip = "127.0.0.1";
+    char *ip = "10.206.0.10";
     int portnum = port;
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
