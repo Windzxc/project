@@ -57,7 +57,7 @@ int make_server_socket(int port, int backlog)
     address.sin_family = AF_INET;
     address.sin_port = htonl(13);
 
-    if (bind(listenfd, &address, sizeof(address)) != 0)
+    if (bind(listenfd, (struct sockaddr *)&address, sizeof(address)) != 0)
     {
         printf("oops: error bind");
         exit(1);
