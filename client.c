@@ -4,6 +4,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define MAXLINE 520
 #define HOSTNAME VM-0-10-centos
@@ -12,11 +13,11 @@
 int main(int argc, char *argv[])
 {
     int clientfd;
-    struct sockadd_in address;
+    struct sockaddr_in address;
     int len;
     int result;
     char buf[MAXLINE];
-    char *ip = "127.0.0.1"
+    char *ip = "127.0.0.1";
 
     len = sizeof(address);
     memset(&address, 0, sizeof(address));
@@ -39,7 +40,7 @@ int main(int argc, char *argv[])
     }
     
     read(clientfd, buf, MAXLINE);
-    fputs(buf, MAXLINE, stdout);
+    fputs(buf, stdout);
 
     close(clientfd);
     return 0;
