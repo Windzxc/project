@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         printf("oops: client\n");
         exit(1);
     }
-    
+    printf("连接成功！\n");
     read(clientfd, buf, MAXLINE);
     fputs(buf, stdout);
 

@@ -26,7 +26,7 @@ int main(int argc, int *argv[])
     while(1)
     {
         connfd = accept(listenfd, NULL, NULL);
-        printf("等待连接中。。。\n");
+        printf("连接完成。。。\n");
         echo(connfd);
         close(connfd);
     }
