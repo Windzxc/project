@@ -46,13 +46,14 @@ int main(int argc, int *argv[])
 }
 
 
-int make_server_socket(int port; int backlog)
+int make_server_socket(int port, int backlog)
 {
     int listenfd;
     struct hostent *hp;
     struct sockadd_in address;
     char hostname[HOSTLEN];
   
+    int portnum = port;
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
     if(listenfd == -1)
@@ -66,10 +67,10 @@ int make_server_socket(int port; int backlog)
     hp = gethostbyname(hostname);
     
     address.sin_family = AF_INET;
-    address.sin_port = htonl(port);
-    address.sin_addr.s_addr = hp->h_addr;
+    address.sin_port = htonl(portnum);
+    address.sin_addr.s_addr = hp->h_addr_list[1];
 
-    if (bind(listenfd, &address, sizeof(addresss)) != 0)
+    if (bind(listenfd, &address, sizeof(address)) != 0)
     {
         printf("oops: error bind");
         exit(1);
