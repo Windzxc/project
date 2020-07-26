@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAXLINE 520
 #define HOSTNAME VM-0-10-centos
