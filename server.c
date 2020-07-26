@@ -20,7 +20,7 @@ int main(int argc, int *argv[])
 {
     int listenfd;
     int connfd;
-    struct sockadd_in clientaddr;
+    struct sockaddr_in clientaddr;
     socklen_t clientlen;
     
     listenfd = make_server_socket(PORT, BACKLOG);
@@ -40,7 +40,7 @@ int make_server_socket(int port, int backlog)
 {
     int listenfd;
     struct hostent *hp;
-    struct sockadd_in address;
+    struct sockaddr_in address;
     char hostname[HOSTLEN];
     char *ip = "127.0.0.1";
     int portnum = port;

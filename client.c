@@ -8,7 +8,6 @@
 #define MAXLINE 520
 #define HOSTNAME VM-0-10-centos
 #define PORT 13
-#define IP 127.0.0.1
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +16,7 @@ int main(int argc, char *argv[])
     int len;
     int result;
     char buf[MAXLINE];
+    char *ip = "127.0.0.1"
 
     len = sizeof(address);
     memset(&address, 0, sizeof(address));
@@ -24,7 +24,11 @@ int main(int argc, char *argv[])
     clientfd = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
     address.sin_port = htonl(PORT);
-    address.sin_addr.s_addr = IP;
+    if (inet_pton(AF_INET, ip, &address.sin_addr) <= 0)
+    {
+        printf("error:inet_pton");
+        exit(1);
+    }
 
     result = connect(clientfd, (struct sockadd*)&address, len);
 
