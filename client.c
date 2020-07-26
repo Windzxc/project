@@ -5,35 +5,40 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define hostname root
+#define MAXLINE 520
 
 int main(int argc, char *argv[])
 {
-    int sockfd;
+    int clientfd;
     struct sockadd_in address;
     int len;
     int result;
+    char *host;
+    char *port;
+    char buf[MAXLINE];
 
+    host = argv[1];
+    port = argv[2];
+    len = sizeof(address);
     memset(&address, 0, sizeof(address));
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    clientfd = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
-    address.sin_port = htonl(900);
-    address.sin_addr.s_addr = hostname;
+    address.sin_port = htonl(port);
+    address.sin_addr.s_addr = host;
 
-    len = sizeof(address);
-
-    result = connect(sockfd, (struct sockadd*)&address, len);
+    result = connect(clientfd, (struct sockadd*)&address, len);
 
     if (result == -1)
     {
         printf("oops: client");
         exit(1);
     }
+    
+    read(clientfd, buf, MAXLINE);
+    fputs(buf, MAXLINE, stdout);
 
-    write(sockfd, &ch, 1);
-    read(sockfd, &ch, 1);
-    close(sockfd);
+    close(clientfd);
     return 0;
 
 }
