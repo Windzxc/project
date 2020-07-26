@@ -5,6 +5,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAXLINE 520
 #define HOSTLEN 120
@@ -16,10 +18,22 @@ int main(int argc, int *argv[])
 {
     int listenfd;
     int connfd;
-    socklen_t clientlen;
-    
     struct sockadd_in clientaddr;
-    listenfd = make_server_socket(port, backlog)
+    int port;
+    int backlog;
+    socklen_t clientlen;
+
+    if (argc != 3)
+    {
+        printf("error argument!");
+        exit(1);
+    }
+
+    port = argv[1];
+    backlog = argv[2];
+    
+
+    listenfd = make_server_socket(port, backlog);
     
     while(1)
     {
@@ -53,9 +67,9 @@ int make_server_socket(int port; int backlog)
     
     address.sin_family = AF_INET;
     address.sin_port = htonl(port);
-    address.sin_addr = hp->h_addr;
+    address.sin_addr.s_addr = hp->h_addr;
 
-    if (bind(listenfd, &addresss, sizeof(addresss)) != 0)
+    if (bind(listenfd, &address, sizeof(addresss)) != 0)
     {
         printf("oops: error bind");
         exit(1);
