@@ -56,7 +56,7 @@ int make_server_socket(int port, int backlog)
     }
     address.sin_family = AF_INET;
     address.sin_port = htonl(13);
-    address.sin_addr.s_addr = inet_addr(ip);
+    address.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(listenfd, (struct sockaddr *)&address, sizeof(address)) != 0)
     {
