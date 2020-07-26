@@ -20,14 +20,12 @@ int main(int argc, int *argv[])
 {
     int listenfd;
     int connfd;
-    struct sockaddr_in clientaddr;
-    socklen_t clientlen;
     
     listenfd = make_server_socket(PORT, BACKLOG);
     
     while(1)
     {
-        connfd = accept(listenfd, &clientaddr, &clientlen);
+        connfd = accept(listenfd, NULL, NULL);
 
         echo(connfd);
         close(connfd);
@@ -39,9 +37,7 @@ int main(int argc, int *argv[])
 int make_server_socket(int port, int backlog)
 {
     int listenfd;
-    struct hostent *hp;
     struct sockaddr_in address;
-    char hostname[HOSTLEN];
     char *ip = "127.0.0.1";
     int portnum = port;
 
@@ -52,10 +48,7 @@ int make_server_socket(int port, int backlog)
         exit(1);
     }
 
-    memset(&address, 0, sizeof(address));
-    gethostname(hostname,HOSTLEN);
-    //hp = (struct hostent *)gethostbyname(hostname);
-    
+    memset(&address, 0, sizeof(address));    
     if (inet_pton(AF_INET, ip, &address.sin_addr) <= 0)
     {
         printf("error:inet_pton");
