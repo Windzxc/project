@@ -10,7 +10,8 @@
 
 #define MAXLINE 520
 #define HOSTLEN 120
-#define PORT 8080
+#define PORT 13
+#define IP 127.0.0.1
 #define BACKLOG 5
 
 int make_server_socket(int port, int backlog);
@@ -59,11 +60,12 @@ int make_server_socket(int port, int backlog)
 
     memset(&address, 0, sizeof(address));
     gethostname(hostname,HOSTLEN);
-    hp = gethostbyname(hostname);
+    //hp = (struct hostent *)gethostbyname(hostname);
+    
     
     address.sin_family = AF_INET;
-    address.sin_port = htonl(portnum);
-    address.sin_addr.s_addr = hp->h_addr_list[1];
+    address.sin_port = htonl(13);
+    address.sin_addr.s_addr = IP;
 
     if (bind(listenfd, &address, sizeof(address)) != 0)
     {
