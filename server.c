@@ -10,6 +10,8 @@
 
 #define MAXLINE 520
 #define HOSTLEN 120
+#define PORT 8080
+#define BACKLOG 5
 
 int make_server_socket(int port, int backlog);
 void echo(int fd);
@@ -19,21 +21,14 @@ int main(int argc, int *argv[])
     int listenfd;
     int connfd;
     struct sockadd_in clientaddr;
-    int port;
-    int backlog;
     socklen_t clientlen;
 
-    if (argc != 3)
-    {
-        printf("error argument!");
-        exit(1);
-    }
 
     port = argv[1];
     backlog = argv[2];
     
 
-    listenfd = make_server_socket(port, backlog);
+    listenfd = make_server_socket(PORT, BACKLOG);
     
     while(1)
     {
