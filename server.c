@@ -10,8 +10,8 @@
 
 #define MAXLINE 520
 #define HOSTLEN 120
-#define PORT 13
-#define BACKLOG 5
+#define PORT 2020
+#define BACKLOG 1
 
 int make_server_socket(int port, int backlog);
 void echo(int fd);
@@ -38,7 +38,7 @@ int make_server_socket(int port, int backlog)
 {
     int listenfd;
     struct sockaddr_in address;
-    char *ip = "10.206.0.10";
+    char *ip = "127.0.0.1";
     int portnum = port;
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -56,6 +56,7 @@ int make_server_socket(int port, int backlog)
     }
     address.sin_family = AF_INET;
     address.sin_port = htonl(13);
+    address.sin_addr.s_addr = inet_addr(ip);
 
     if (bind(listenfd, (struct sockaddr *)&address, sizeof(address)) != 0)
     {
