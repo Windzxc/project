@@ -7,7 +7,7 @@
 #include <time.h>
 
 #define MAXLINE 520
-#define HOSTlen 120
+#define HOSTLEN 120
 
 int make_server_socket(int port, int backlog);
 void echo(int fd);
