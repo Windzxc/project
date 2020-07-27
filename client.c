@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     clientfd = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
-    address.sin_port = htonl(PORT);
+    address.sin_port = htons(PORT);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
     //printf("address.sin_addr is %s\n",address.sin_addr.s_addr);

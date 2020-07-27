@@ -10,7 +10,7 @@
 
 #define MAXLINE 520
 #define HOSTLEN 120
-#define PORT 2020
+#define PORTNUM 2020
 #define BACKLOG 1
 
 int make_server_socket(int port, int backlog);
@@ -55,7 +55,7 @@ int make_server_socket(int port, int backlog)
         exit(1);
     }
     address.sin_family = AF_INET;
-    address.sin_port = htonl(13);
+    address.sin_port = htons(PORTNUM);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(listenfd, (struct sockaddr *)&address, sizeof(address)) != 0)
