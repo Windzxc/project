@@ -8,7 +8,6 @@
 #include <string.h>
 
 #define MAXLINE 520
-#define HOSTNAME VM-0-10-centos
 #define PORT 2020
 
 int main(int argc, char *argv[])
