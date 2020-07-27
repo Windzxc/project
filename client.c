@@ -18,12 +18,16 @@ int main(int argc, char *argv[])
     int len;
     int result;
     char buf[MAXLINE];
-    char ip[] = "127.0.0.1";
 
     memset(&address, 0, sizeof(address));
     len = sizeof(address);
 
     clientfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientfd < 0)
+    {
+        printf("socket error\n");
+        exit(1);
+    }
     address.sin_family = AF_INET;
     address.sin_port = htons(PORT);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -33,7 +37,7 @@ int main(int argc, char *argv[])
 
     result = connect(clientfd, (struct sockaddr *)&address, len);
 
-    if (result == -1)
+    if (result < 0)
     {
         printf("oops: client\n");
         exit(1);

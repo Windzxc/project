@@ -11,7 +11,7 @@
 #define MAXLINE 520
 #define HOSTLEN 120
 #define PORTNUM 2020
-#define BACKLOG 1
+#define BACKLOG 5
 
 int make_server_socket(int port, int backlog);
 void echo(int fd);
@@ -21,12 +21,18 @@ int main(int argc, int *argv[])
     int listenfd;
     int connfd;
     
-    listenfd = make_server_socket(PORT, BACKLOG);
+    listenfd = make_server_socket(PORTNUM, BACKLOG);
     printf("端口打开监听，服务器已启动\n");
     while(1)
     {
+        printf("监听端口：%d\n",PORTNUM);
         connfd = accept(listenfd, NULL, NULL);
-        printf("连接完成。。。\n");
+        if (connfd < 0)
+        {
+            printf("accept error");
+            continue;
+        }
+        printf("等待发送。。。\n");
         echo(connfd);
         close(connfd);
     }
@@ -38,7 +44,6 @@ int make_server_socket(int port, int backlog)
 {
     int listenfd;
     struct sockaddr_in address;
-    char *ip = "127.0.0.1";
     int portnum = port;
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -49,13 +54,8 @@ int make_server_socket(int port, int backlog)
     }
 
     memset(&address, 0, sizeof(address));    
-    if (inet_pton(AF_INET, ip, &address.sin_addr) <= 0)
-    {
-        printf("error:inet_pton");
-        exit(1);
-    }
     address.sin_family = AF_INET;
-    address.sin_port = htons(PORTNUM);
+    address.sin_port = htons(portnum);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(listenfd, (struct sockaddr *)&address, sizeof(address)) != 0)
