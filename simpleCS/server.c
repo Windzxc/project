@@ -7,6 +7,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #define MAXLINE 120
 #define HOSTLEN 120
