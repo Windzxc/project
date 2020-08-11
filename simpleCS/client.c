@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
         fputs(recvline, stdout);
     }
     close(clientfd);
+    printf("over");
     return 0;
 
 }
