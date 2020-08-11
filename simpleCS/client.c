@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLINE 520
+#define MAXLINE 120
 #define PORT 2020
 
 int main(int argc, char *argv[])
@@ -17,7 +17,9 @@ int main(int argc, char *argv[])
     int len;
     int result;
     char buf[MAXLINE];
+    char recvline[MAXLINE] = {0};
 
+    memset(buf, 0, MAXLINE);
     memset(&address, 0, sizeof(address));
     len = sizeof(address);
 
@@ -31,7 +33,6 @@ int main(int argc, char *argv[])
     address.sin_port = htons(PORT);
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    //printf("address.sin_addr is %s\n",address.sin_addr.s_addr);
     printf("发起连接。。。\n");
 
     result = connect(clientfd, (struct sockaddr *)&address, len);
@@ -41,10 +42,13 @@ int main(int argc, char *argv[])
         printf("oops: client\n");
         exit(1);
     }
-    printf("连接成功！\n");
-    read(clientfd, buf, MAXLINE);
-    fputs(buf, stdout);
-
+    printf("连接到服务器ip：%s, port: %d！\n",address.sin_addr.s_addr, address.sin_port);
+    while(fgets(buf, MAXLINE, stdin))
+    {
+        write(clientfd, buf, MAXLINE);
+        read(clientfd, recvline, MAXLINE);
+        fputs(recvline, stdout);
+    }
     close(clientfd);
     return 0;
 

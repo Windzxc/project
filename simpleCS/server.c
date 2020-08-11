@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLINE 520
+#define MAXLINE 120
 #define HOSTLEN 120
 #define PORTNUM 2020
 #define BACKLOG 5
@@ -22,18 +22,21 @@ int main(int argc, int *argv[])
     int connfd;
     
     listenfd = make_server_socket(PORTNUM, BACKLOG);
-    printf("端口打开监听，服务器已启动\n");
     while(1)
     {
-        printf("监听端口：%d\n",PORTNUM);
         connfd = accept(listenfd, NULL, NULL);
         if (connfd < 0)
         {
             printf("accept error");
             continue;
         }
-        printf("等待发送。。。\n");
-        echo(connfd);
+        if(fork() == 0)
+        {
+            close(listenfd);
+            echo(connfd);
+            close(connfd);
+            exit(0);
+        }
         close(connfd);
     }
     eixt(0);
@@ -75,9 +78,19 @@ int make_server_socket(int port, int backlog)
 
 void echo(int fd)
 {
-    time_t now;
-    char *cp;
-    time(&now);
-    cp = ctime(&now);
-    write(fd, cp, strlen(cp));
+    ssize_t n = 0;
+    char buf[MAXLINE] = {0};
+again:
+    while((n = read(fd, buf, MAXLINE)) > 0)
+    {
+        write(fd, buf, n);
+    }
+    if (n < 0 && errno == EINTR)
+    {
+        goto again;
+    }
+    else if (n < 0)
+    {
+        printf("echo: read error");
+    }
 }
